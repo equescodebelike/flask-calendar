@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div class="p-5 text-center text-muted bg-light">
+        <h1 style="text-align:center"> Event Calendar </h1>
+        <h4 style="text-align:center">by Arkhip Korobov</h4>
+    </div>
+    <nav class="navbar navbar-light bg-light">
+        <form action="{{url_for('prevYear', month=month, year=year)}}" method="POST">
+          <button class="btn btn-secondary" type="submit">Prev</button>
+        </form>
+        <a class="navbar-brand text-secondary">{{ year }}</a>
+        <form action="{{url_for('nextYear', month=month, year=year)}}" method="POST">
+          <button class="btn btn-secondary" type="submit">Next</button>
+        </form>
+    </nav>
+
+    <div class="p-5 text-center bg-light">
+        <table class="table table-sm">
+            <tbody>
+                {% for monthNums in months|batch(3) %}
+                <tr>
+                    {% for monthNum in monthNums %}
+                    <form action="{{url_for('setMonth', month=monthNum, year=year)}}" method="POST">
+                        <button class="btn btn-light btn-outline-light text-primary">
+                            {{ months[monthNum] }}
+                        </button>
+                    </form>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+
+        <h4 class="mb-3">{{ months[month] }}</h4>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    {% for day in days%}
+                    <th>{{day}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(0, 5) %}
+                <tr>
+                    {% for j in range(0, 7) %}
+                    <th>
+                    <form action="{{url_for('reserve')}}" method="POST">
+                        <input type="hidden"  name="datesnum" value={{dates[(i*7)+j]}}>
+                        <button type="submit" class="btn btn-sm">
+                            {{dates[(i*7)+j].day }}
+                        </button>
+                    </form>
+                    </th>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

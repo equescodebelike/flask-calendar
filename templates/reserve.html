@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="p-5 text-center bg-light">
+    <h1> Event Form</h1>
+    <form action="{{url_for('postReserve')}}" method="POST">
+        <div class="form-group row">
+            <label for="DateNum" class="col-sm-6 col-form-label">Date</label>
+            <div class="col-sm-6">
+                <input type="date" readonly name='datesnum' value={{dateName}}>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="EventName" class="col-sm-6 col-form-label">Event Name</label>
+            <div class="col-sm-6">
+                <input placeholder="Name" name='fname'>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="EventPlace" class="col-sm-6 col-form-label">Event Place</label>
+            <div class="col-sm-6">
+                <input placeholder="Place" name='lname'>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Email" class="col-sm-6 col-form-label">Email</label>
+            <div class="col-sm-6">
+                <input type="email" placeholder="arkhip@korobov.ru" name='email'>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="p-5 text-center bg-white">
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th> EventName</th>
+            <th> EventPlace</th>
+            <th> Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0, reserveList|length, 3) %}
+        <tr>
+            <td>{{ reserveList[i][2] }}</td>
+            <td>{{ reserveList[i][3] }}</td>
+            <td>{{ reserveList[i][4] }}</td>
+        </tr>
+        {% if i+1 < reserveList|length %}
+        <tr>
+            <td>{{ reserveList[i+1][2] }}</td>
+            <td>{{ reserveList[i+1][3] }}</td>
+            <td>{{ reserveList[i+1][4] }}</td>
+        </tr>
+        {% endif %}
+        {% if i+2 < reserveList|length %}
+        <tr>
+            <td>{{ reserveList[i+2][2] }}</td>
+            <td>{{ reserveList[i+2][3] }}</td>
+            <td>{{ reserveList[i+2][4] }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+</body>
+</html>
